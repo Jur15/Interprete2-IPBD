@@ -3,8 +3,8 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[600, 600]"/>
+    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[706, 600]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -21,7 +21,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,88,0,0,2,88"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,88,0,0,2,-62"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
@@ -47,25 +47,28 @@
                       <Component id="login_dbNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="login_dbText" pref="175" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="login_serverText" max="32767" attributes="0"/>
-                          <Component id="login_userText" max="32767" attributes="0"/>
-                          <Component id="login_passText" pref="173" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="login_helpButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="login_connectButton" pref="83" max="32767" attributes="0"/>
-                      <Component id="login_exitButton" pref="0" max="32767" attributes="0"/>
+                      <Component id="login_dbText" pref="206" max="32767" attributes="0"/>
+                      <Component id="login_passText" alignment="0" max="32767" attributes="0"/>
+                      <Component id="login_userText" alignment="0" max="32767" attributes="0"/>
+                      <Component id="login_serverText" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="login_helpButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="211" max="32767" attributes="0"/>
+                          <Component id="login_exitButton" min="-2" pref="83" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="login_connectButton" min="-2" pref="83" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
                   <Component id="login_aboutButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -75,8 +78,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                  <Component id="login_titleLabel" min="-2" pref="29" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="login_titleLabel" min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   <Component id="login_subTitleLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -165,6 +168,9 @@
               <Dimension value="[89, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="login_connectButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="login_helpButton">
           <Properties>
@@ -211,15 +217,145 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="600" max="32767" attributes="0"/>
+              <Component id="home_titleLabel" alignment="0" max="32767" attributes="0"/>
+              <Component id="home_mainLabel" alignment="0" max="32767" attributes="0"/>
+              <Component id="home_otherLabel" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                  <Component id="home_viewDBButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="68" max="32767" attributes="0"/>
+                  <Component id="home_viewTempButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                  <Component id="home_viewCrossButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                          <Component id="home_optionComboBox" min="-2" pref="241" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="home_continueButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
+                          <Component id="home_returnButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="600" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="home_titleLabel" min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="home_mainLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="home_optionComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="home_continueButton" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="home_otherLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="home_viewCrossButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="home_viewDBButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="home_viewTempButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="151" max="32767" attributes="0"/>
+                  <Component id="home_returnButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="home_titleLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Interprete de Algebra Relacional"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="home_mainLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="16" style="0"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Seleccione una operacion"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="home_optionComboBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="12">
+                <StringItem index="0" value="Seleccion"/>
+                <StringItem index="1" value="Proyeccion generalizada"/>
+                <StringItem index="2" value="Union"/>
+                <StringItem index="3" value="Diferencia de conjuntos"/>
+                <StringItem index="4" value="Prod.Cartesiano"/>
+                <StringItem index="5" value="Interseccion"/>
+                <StringItem index="6" value="Division"/>
+                <StringItem index="7" value="Renombrar atributos"/>
+                <StringItem index="8" value="Join"/>
+                <StringItem index="9" value="Natural Join"/>
+                <StringItem index="10" value="Agregacion"/>
+                <StringItem index="11" value="Agrupacion"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="home_continueButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Continuar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="home_continueButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="home_otherLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="16" style="0"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Otras funciones"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="home_viewDBButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ver tablas en la BD"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="home_viewTempButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ver tablas temporales"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="home_viewCrossButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ver referencia cruzada"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="home_returnButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Desconectar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="home_returnButtonActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="aboutPanel">
       <Constraints>
@@ -234,17 +370,17 @@
               <Component id="about_titleLabel" alignment="1" max="32767" attributes="0"/>
               <Component id="about_nameLabel" alignment="0" max="32767" attributes="0"/>
               <Component id="about_verLabel" alignment="1" max="32767" attributes="0"/>
-              <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="about_homeButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="about_creationLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="333" max="32767" attributes="0"/>
                   <Component id="about_authorLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="310" max="-2" attributes="0"/>
+                  <Component id="about_returnButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -257,9 +393,9 @@
                   <Component id="about_nameLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="about_verLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="about_homeButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
+                  <EmptySpace pref="175" max="32767" attributes="0"/>
+                  <Component id="about_returnButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="about_authorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="about_creationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -304,12 +440,639 @@
             <Property name="text" type="java.lang.String" value="Jurgenn Morales Jimenez"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="about_homeButton">
+        <Component class="javax.swing.JButton" name="about_returnButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Regresar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="about_homeButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="about_returnButtonActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="oneTabOpPanel">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="1TabCard"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="oneTabOp_paramLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="oneTabOp_tableLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="oneTabOp_resulLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="oneTabOp_returnButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace pref="241" max="32767" attributes="0"/>
+                          <Component id="oneTabOp_continueButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="oneTabOp_tableText" pref="283" max="32767" attributes="0"/>
+                              <Component id="oneTabOp_paramText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="oneTabOp_resultText" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <Component id="oneTabOp_nameLabel" alignment="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="oneTabOp_nameLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="oneTabOp_tableLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="oneTabOp_tableText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="oneTabOp_paramLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="oneTabOp_paramText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="oneTabOp_resultText" max="32767" attributes="0"/>
+                      <Component id="oneTabOp_resulLabel" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="152" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="oneTabOp_returnButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="oneTabOp_continueButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="oneTabOp_nameLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value=" "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="oneTabOp_tableLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="oneTabOp_paramLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Parametro:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="oneTabOp_resulLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla resultante:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="oneTabOp_returnButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Regresar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="oneTabOp_returnButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="oneTabOp_continueButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Continuar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="oneTabOp_continueButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="oneTabOp_tableText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="oneTabOp_paramText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="oneTabOp_resultText">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="twoTabOpPanel">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="2TabCard"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="twoTabOp_nameLabel" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="twoTabOp_table2Label" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="twoTabOp_tableLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="twoTabOp_resulLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="twoTabOp_returnButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="0" pref="202" max="32767" attributes="0"/>
+                          <Component id="twoTabOp_continueButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="twoTabOp_table2Text" alignment="0" pref="283" max="32767" attributes="0"/>
+                              <Component id="twoTabOp_resultText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="twoTabOp_tableText" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="twoTabOp_nameLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="twoTabOp_tableLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="twoTabOp_tableText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="twoTabOp_table2Label" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="twoTabOp_table2Text" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="twoTabOp_resultText" alignment="1" max="32767" attributes="0"/>
+                      <Component id="twoTabOp_resulLabel" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="155" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="twoTabOp_returnButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="twoTabOp_continueButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="twoTabOp_nameLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value=" "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="twoTabOp_tableLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla 1:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="twoTabOp_table2Label">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla 2:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="twoTabOp_resulLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla resultante:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="twoTabOp_returnButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Regresar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="twoTabOp_returnButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="twoTabOp_continueButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Continuar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="twoTabOp_continueButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="twoTabOp_tableText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="twoTabOp_table2Text">
+        </Component>
+        <Component class="javax.swing.JTextField" name="twoTabOp_resultText">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="joinOpPanel">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="joinCard"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="joinOp_nameLabel" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="joinOp_table2Label" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="joinOp_tableLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="joinOp_resulLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="joinOp_predLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="joinOp_returnButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace pref="241" max="32767" attributes="0"/>
+                          <Component id="joinOp_continueButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="joinOp_tableText" alignment="0" pref="283" max="32767" attributes="0"/>
+                              <Component id="joinOp_table2Text" alignment="0" max="32767" attributes="0"/>
+                              <Component id="joinOp_resultText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="joinOp_predText" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="joinOp_nameLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="joinOp_tableLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="joinOp_tableText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="joinOp_table2Label" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="joinOp_table2Text" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="joinOp_predLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="joinOp_predText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="joinOp_resultText" alignment="1" max="32767" attributes="0"/>
+                      <Component id="joinOp_resulLabel" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="joinOp_returnButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="joinOp_continueButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="joinOp_nameLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Concatenacion (Join)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="joinOp_tableLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla 1:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="joinOp_table2Label">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla 2:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="joinOp_predLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Predicado:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="joinOp_resulLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla resultante:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="joinOp_returnButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Regresar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinOp_returnButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="joinOp_continueButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Continuar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinOp_continueButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="joinOp_tableText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="joinOp_table2Text">
+        </Component>
+        <Component class="javax.swing.JTextField" name="joinOp_predText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="joinOp_resultText">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="groupOpPanel">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="groupCard"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="groupOp_nameLabel" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="groupOp_atribLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="groupOp_tableLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="groupOp_operLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="groupOp_resulLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                          <Component id="groupOp_returnButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace pref="198" max="32767" attributes="0"/>
+                          <Component id="groupOp_continueButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="groupOp_tableText" alignment="0" pref="283" max="32767" attributes="0"/>
+                              <Component id="groupOp_atribText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="groupOp_resultText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="groupOp_operText" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="groupOp_nameLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="groupOp_tableLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="groupOp_tableText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="groupOp_atribLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="groupOp_atribText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="groupOp_operLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="groupOp_operText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="groupOp_resultText" alignment="1" max="32767" attributes="0"/>
+                      <Component id="groupOp_resulLabel" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="groupOp_returnButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="groupOp_continueButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="groupOp_nameLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Agrupacion"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="groupOp_tableLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="groupOp_atribLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Atributos por agrupar:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="groupOp_operLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Operaciones de agregacion:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="groupOp_resulLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tabla resultante:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="groupOp_returnButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Regresar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="groupOp_returnButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="groupOp_continueButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Continuar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="groupOp_continueButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="groupOp_tableText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="groupOp_atribText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="groupOp_operText">
+        </Component>
+        <Component class="javax.swing.JTextField" name="groupOp_resultText">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="resultPanel">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="resultCard"/>
+        </Constraint>
+      </Constraints>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="result_titleLabel" max="32767" attributes="0"/>
+              <Component id="result_algLabel" alignment="0" max="32767" attributes="0"/>
+              <Component id="result_sqlLabel" alignment="0" max="32767" attributes="0"/>
+              <Component id="result_tableLabel" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="result_ScrollPane" pref="682" max="32767" attributes="0"/>
+                      <Component id="result_algText" alignment="0" max="32767" attributes="0"/>
+                      <Component id="result_sqlText" alignment="1" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="310" max="-2" attributes="0"/>
+                  <Component id="result_returnButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="result_titleLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="result_algLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="result_algText" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="result_sqlLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="result_sqlText" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="result_tableLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="result_ScrollPane" min="-2" pref="173" max="-2" attributes="0"/>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
+                  <Component id="result_returnButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="result_titleLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Resultado"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="result_algLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Instruccion de algebra relacional"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="result_sqlLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Instruccion de SQL"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="result_tableLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Tabla resultante"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="result_algText">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="result_sqlText">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="result_ScrollPane">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="result_Table">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="0" rowCount="0"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="result_returnButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Regresar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="result_returnButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -6,6 +6,10 @@
 package interpretebd;
 
 import java.awt.CardLayout;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,7 +18,9 @@ import java.awt.CardLayout;
 public class InterpreteGUI extends javax.swing.JFrame {
 
     CardLayout c;
-    
+    Connection con;
+    Statement stmt;
+
     /**
      * Creates new form InterpreteGUI
      */
@@ -49,16 +55,79 @@ public class InterpreteGUI extends javax.swing.JFrame {
         login_exitButton = new javax.swing.JButton();
         login_aboutButton = new javax.swing.JButton();
         homePanel = new javax.swing.JPanel();
+        home_titleLabel = new javax.swing.JLabel();
+        home_mainLabel = new javax.swing.JLabel();
+        home_optionComboBox = new javax.swing.JComboBox<>();
+        home_continueButton = new javax.swing.JButton();
+        home_otherLabel = new javax.swing.JLabel();
+        home_viewDBButton = new javax.swing.JButton();
+        home_viewTempButton = new javax.swing.JButton();
+        home_viewCrossButton = new javax.swing.JButton();
+        home_returnButton = new javax.swing.JButton();
         aboutPanel = new javax.swing.JPanel();
         about_titleLabel = new javax.swing.JLabel();
         about_nameLabel = new javax.swing.JLabel();
         about_verLabel = new javax.swing.JLabel();
         about_creationLabel = new javax.swing.JLabel();
         about_authorLabel = new javax.swing.JLabel();
-        about_homeButton = new javax.swing.JButton();
+        about_returnButton = new javax.swing.JButton();
+        oneTabOpPanel = new javax.swing.JPanel();
+        oneTabOp_nameLabel = new javax.swing.JLabel();
+        oneTabOp_tableLabel = new javax.swing.JLabel();
+        oneTabOp_paramLabel = new javax.swing.JLabel();
+        oneTabOp_resulLabel = new javax.swing.JLabel();
+        oneTabOp_returnButton = new javax.swing.JButton();
+        oneTabOp_continueButton = new javax.swing.JButton();
+        oneTabOp_tableText = new javax.swing.JTextField();
+        oneTabOp_paramText = new javax.swing.JTextField();
+        oneTabOp_resultText = new javax.swing.JTextField();
+        twoTabOpPanel = new javax.swing.JPanel();
+        twoTabOp_nameLabel = new javax.swing.JLabel();
+        twoTabOp_tableLabel = new javax.swing.JLabel();
+        twoTabOp_table2Label = new javax.swing.JLabel();
+        twoTabOp_resulLabel = new javax.swing.JLabel();
+        twoTabOp_returnButton = new javax.swing.JButton();
+        twoTabOp_continueButton = new javax.swing.JButton();
+        twoTabOp_tableText = new javax.swing.JTextField();
+        twoTabOp_table2Text = new javax.swing.JTextField();
+        twoTabOp_resultText = new javax.swing.JTextField();
+        joinOpPanel = new javax.swing.JPanel();
+        joinOp_nameLabel = new javax.swing.JLabel();
+        joinOp_tableLabel = new javax.swing.JLabel();
+        joinOp_table2Label = new javax.swing.JLabel();
+        joinOp_predLabel = new javax.swing.JLabel();
+        joinOp_resulLabel = new javax.swing.JLabel();
+        joinOp_returnButton = new javax.swing.JButton();
+        joinOp_continueButton = new javax.swing.JButton();
+        joinOp_tableText = new javax.swing.JTextField();
+        joinOp_table2Text = new javax.swing.JTextField();
+        joinOp_predText = new javax.swing.JTextField();
+        joinOp_resultText = new javax.swing.JTextField();
+        groupOpPanel = new javax.swing.JPanel();
+        groupOp_nameLabel = new javax.swing.JLabel();
+        groupOp_tableLabel = new javax.swing.JLabel();
+        groupOp_atribLabel = new javax.swing.JLabel();
+        groupOp_operLabel = new javax.swing.JLabel();
+        groupOp_resulLabel = new javax.swing.JLabel();
+        groupOp_returnButton = new javax.swing.JButton();
+        groupOp_continueButton = new javax.swing.JButton();
+        groupOp_tableText = new javax.swing.JTextField();
+        groupOp_atribText = new javax.swing.JTextField();
+        groupOp_operText = new javax.swing.JTextField();
+        groupOp_resultText = new javax.swing.JTextField();
+        resultPanel = new javax.swing.JPanel();
+        result_titleLabel = new javax.swing.JLabel();
+        result_algLabel = new javax.swing.JLabel();
+        result_sqlLabel = new javax.swing.JLabel();
+        result_tableLabel = new javax.swing.JLabel();
+        result_algText = new javax.swing.JTextField();
+        result_sqlText = new javax.swing.JTextField();
+        result_ScrollPane = new javax.swing.JScrollPane();
+        result_Table = new javax.swing.JTable();
+        result_returnButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 600));
+        setMaximumSize(new java.awt.Dimension(706, 600));
         getContentPane().setLayout(new java.awt.CardLayout());
 
         login_titleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -79,6 +148,11 @@ public class InterpreteGUI extends javax.swing.JFrame {
 
         login_connectButton.setText("Conectar");
         login_connectButton.setPreferredSize(new java.awt.Dimension(89, 25));
+        login_connectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                login_connectButtonActionPerformed(evt);
+            }
+        });
 
         login_helpButton.setText("Ayuda");
         login_helpButton.setMaximumSize(new java.awt.Dimension(89, 25));
@@ -114,21 +188,23 @@ public class InterpreteGUI extends javax.swing.JFrame {
                     .addComponent(login_passLabel)
                     .addComponent(login_dbNameLabel))
                 .addGap(20, 20, 20)
-                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(login_dbText, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                    .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(login_serverText)
-                        .addComponent(login_userText)
-                        .addComponent(login_passText, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
-                .addGap(160, 160, 160))
-            .addGroup(loginPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(login_helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(156, 156, 156)
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(login_connectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                    .addComponent(login_exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(login_dbText, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(login_passText)
+                    .addComponent(login_userText)
+                    .addComponent(login_serverText))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addComponent(login_helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                        .addComponent(login_exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(login_connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(210, 210, 210)
                 .addComponent(login_aboutButton)
                 .addContainerGap())
         );
@@ -136,8 +212,8 @@ public class InterpreteGUI extends javax.swing.JFrame {
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPanelLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(login_titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addComponent(login_titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
                 .addComponent(login_subTitleLabel)
                 .addGap(60, 60, 60)
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -167,15 +243,88 @@ public class InterpreteGUI extends javax.swing.JFrame {
 
         getContentPane().add(loginPanel, "loginCard");
 
+        home_titleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        home_titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        home_titleLabel.setText("Interprete de Algebra Relacional");
+
+        home_mainLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        home_mainLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        home_mainLabel.setText("Seleccione una operacion");
+
+        home_optionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion", "Proyeccion generalizada", "Union", "Diferencia de conjuntos", "Prod.Cartesiano", "Interseccion", "Division", "Renombrar atributos", "Join", "Natural Join", "Agregacion", "Agrupacion" }));
+
+        home_continueButton.setText("Continuar");
+        home_continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                home_continueButtonActionPerformed(evt);
+            }
+        });
+
+        home_otherLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        home_otherLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        home_otherLabel.setText("Otras funciones");
+
+        home_viewDBButton.setText("Ver tablas en la BD");
+
+        home_viewTempButton.setText("Ver tablas temporales");
+
+        home_viewCrossButton.setText("Ver referencia cruzada");
+
+        home_returnButton.setText("Desconectar");
+        home_returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                home_returnButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(home_titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(home_mainLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(home_otherLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(home_viewDBButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(home_viewTempButton)
+                .addGap(68, 68, 68)
+                .addComponent(home_viewCrossButton)
+                .addGap(54, 54, 54))
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(homePanelLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(home_optionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(home_continueButton))
+                    .addGroup(homePanelLayout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(home_returnButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(home_titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(home_mainLabel)
+                .addGap(32, 32, 32)
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(home_optionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(home_continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(90, 90, 90)
+                .addComponent(home_otherLabel)
+                .addGap(40, 40, 40)
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(home_viewCrossButton)
+                    .addComponent(home_viewDBButton)
+                    .addComponent(home_viewTempButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                .addComponent(home_returnButton)
+                .addGap(25, 25, 25))
         );
 
         getContentPane().add(homePanel, "homeCard");
@@ -195,10 +344,10 @@ public class InterpreteGUI extends javax.swing.JFrame {
 
         about_authorLabel.setText("Jurgenn Morales Jimenez");
 
-        about_homeButton.setText("Regresar");
-        about_homeButton.addActionListener(new java.awt.event.ActionListener() {
+        about_returnButton.setText("Regresar");
+        about_returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                about_homeButtonActionPerformed(evt);
+                about_returnButtonActionPerformed(evt);
             }
         });
 
@@ -209,16 +358,16 @@ public class InterpreteGUI extends javax.swing.JFrame {
             .addComponent(about_titleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(about_nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(about_verLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(aboutPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(about_homeButton)
-                .addGap(257, 257, 257))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aboutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(about_creationLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
                 .addComponent(about_authorLabel)
                 .addContainerGap())
+            .addGroup(aboutPanelLayout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(about_returnButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         aboutPanelLayout.setVerticalGroup(
             aboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,9 +378,9 @@ public class InterpreteGUI extends javax.swing.JFrame {
                 .addComponent(about_nameLabel)
                 .addGap(41, 41, 41)
                 .addComponent(about_verLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(about_homeButton)
-                .addGap(122, 122, 122)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                .addComponent(about_returnButton)
+                .addGap(97, 97, 97)
                 .addGroup(aboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(about_authorLabel)
                     .addComponent(about_creationLabel))
@@ -240,12 +389,413 @@ public class InterpreteGUI extends javax.swing.JFrame {
 
         getContentPane().add(aboutPanel, "aboutCard");
 
+        oneTabOp_nameLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        oneTabOp_nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        oneTabOp_nameLabel.setText(" ");
+
+        oneTabOp_tableLabel.setText("Tabla:");
+
+        oneTabOp_paramLabel.setText("Parametro:");
+
+        oneTabOp_resulLabel.setText("Tabla resultante:");
+
+        oneTabOp_returnButton.setText("Regresar");
+        oneTabOp_returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                oneTabOp_returnButtonActionPerformed(evt);
+            }
+        });
+
+        oneTabOp_continueButton.setText("Continuar");
+        oneTabOp_continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                oneTabOp_continueButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout oneTabOpPanelLayout = new javax.swing.GroupLayout(oneTabOpPanel);
+        oneTabOpPanel.setLayout(oneTabOpPanelLayout);
+        oneTabOpPanelLayout.setHorizontalGroup(
+            oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(oneTabOpPanelLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(oneTabOp_paramLabel)
+                    .addComponent(oneTabOp_tableLabel)
+                    .addComponent(oneTabOp_resulLabel)
+                    .addComponent(oneTabOp_returnButton))
+                .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(oneTabOpPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                        .addComponent(oneTabOp_continueButton)
+                        .addGap(140, 140, 140))
+                    .addGroup(oneTabOpPanelLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(oneTabOp_tableText, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                            .addComponent(oneTabOp_paramText)
+                            .addComponent(oneTabOp_resultText))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(oneTabOp_nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        oneTabOpPanelLayout.setVerticalGroup(
+            oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(oneTabOpPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(oneTabOp_nameLabel)
+                .addGap(80, 80, 80)
+                .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(oneTabOp_tableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(oneTabOp_tableText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64)
+                .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(oneTabOp_paramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(oneTabOp_paramText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64)
+                .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(oneTabOp_resultText)
+                    .addComponent(oneTabOp_resulLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addGroup(oneTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(oneTabOp_returnButton)
+                    .addComponent(oneTabOp_continueButton))
+                .addGap(70, 70, 70))
+        );
+
+        getContentPane().add(oneTabOpPanel, "1TabCard");
+
+        twoTabOp_nameLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        twoTabOp_nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        twoTabOp_nameLabel.setText(" ");
+
+        twoTabOp_tableLabel.setText("Tabla 1:");
+
+        twoTabOp_table2Label.setText("Tabla 2:");
+
+        twoTabOp_resulLabel.setText("Tabla resultante:");
+
+        twoTabOp_returnButton.setText("Regresar");
+        twoTabOp_returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                twoTabOp_returnButtonActionPerformed(evt);
+            }
+        });
+
+        twoTabOp_continueButton.setText("Continuar");
+        twoTabOp_continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                twoTabOp_continueButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout twoTabOpPanelLayout = new javax.swing.GroupLayout(twoTabOpPanel);
+        twoTabOpPanel.setLayout(twoTabOpPanelLayout);
+        twoTabOpPanelLayout.setHorizontalGroup(
+            twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(twoTabOp_nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, twoTabOpPanelLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(twoTabOp_table2Label)
+                    .addComponent(twoTabOp_tableLabel)
+                    .addComponent(twoTabOp_resulLabel)
+                    .addComponent(twoTabOp_returnButton))
+                .addGap(39, 39, 39)
+                .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(twoTabOpPanelLayout.createSequentialGroup()
+                        .addGap(0, 202, Short.MAX_VALUE)
+                        .addComponent(twoTabOp_continueButton)
+                        .addGap(140, 140, 140))
+                    .addGroup(twoTabOpPanelLayout.createSequentialGroup()
+                        .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(twoTabOp_table2Text, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                            .addComponent(twoTabOp_resultText)
+                            .addComponent(twoTabOp_tableText))
+                        .addContainerGap())))
+        );
+        twoTabOpPanelLayout.setVerticalGroup(
+            twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(twoTabOpPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(twoTabOp_nameLabel)
+                .addGap(80, 80, 80)
+                .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(twoTabOp_tableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(twoTabOp_tableText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64)
+                .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(twoTabOp_table2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(twoTabOp_table2Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
+                .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(twoTabOp_resultText)
+                    .addComponent(twoTabOp_resulLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addGroup(twoTabOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(twoTabOp_returnButton)
+                    .addComponent(twoTabOp_continueButton))
+                .addGap(70, 70, 70))
+        );
+
+        getContentPane().add(twoTabOpPanel, "2TabCard");
+
+        joinOp_nameLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        joinOp_nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        joinOp_nameLabel.setText("Concatenacion (Join)");
+
+        joinOp_tableLabel.setText("Tabla 1:");
+
+        joinOp_table2Label.setText("Tabla 2:");
+
+        joinOp_predLabel.setText("Predicado:");
+
+        joinOp_resulLabel.setText("Tabla resultante:");
+
+        joinOp_returnButton.setText("Regresar");
+        joinOp_returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinOp_returnButtonActionPerformed(evt);
+            }
+        });
+
+        joinOp_continueButton.setText("Continuar");
+        joinOp_continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinOp_continueButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout joinOpPanelLayout = new javax.swing.GroupLayout(joinOpPanel);
+        joinOpPanel.setLayout(joinOpPanelLayout);
+        joinOpPanelLayout.setHorizontalGroup(
+            joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(joinOp_nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, joinOpPanelLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(joinOp_table2Label)
+                    .addComponent(joinOp_tableLabel)
+                    .addComponent(joinOp_resulLabel)
+                    .addComponent(joinOp_predLabel)
+                    .addComponent(joinOp_returnButton))
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(joinOpPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                        .addComponent(joinOp_continueButton)
+                        .addGap(140, 140, 140))
+                    .addGroup(joinOpPanelLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(joinOp_tableText, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                            .addComponent(joinOp_table2Text)
+                            .addComponent(joinOp_resultText)
+                            .addComponent(joinOp_predText))
+                        .addContainerGap())))
+        );
+        joinOpPanelLayout.setVerticalGroup(
+            joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(joinOpPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(joinOp_nameLabel)
+                .addGap(80, 80, 80)
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(joinOp_tableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(joinOp_tableText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(joinOp_table2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(joinOp_table2Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(joinOp_predLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(joinOp_predText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(joinOp_resultText)
+                    .addComponent(joinOp_resulLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(joinOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(joinOp_returnButton)
+                    .addComponent(joinOp_continueButton))
+                .addGap(70, 70, 70))
+        );
+
+        getContentPane().add(joinOpPanel, "joinCard");
+
+        groupOp_nameLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        groupOp_nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        groupOp_nameLabel.setText("Agrupacion");
+
+        groupOp_tableLabel.setText("Tabla:");
+
+        groupOp_atribLabel.setText("Atributos por agrupar:");
+
+        groupOp_operLabel.setText("Operaciones de agregacion:");
+
+        groupOp_resulLabel.setText("Tabla resultante:");
+
+        groupOp_returnButton.setText("Regresar");
+        groupOp_returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                groupOp_returnButtonActionPerformed(evt);
+            }
+        });
+
+        groupOp_continueButton.setText("Continuar");
+        groupOp_continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                groupOp_continueButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout groupOpPanelLayout = new javax.swing.GroupLayout(groupOpPanel);
+        groupOpPanel.setLayout(groupOpPanelLayout);
+        groupOpPanelLayout.setHorizontalGroup(
+            groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(groupOp_nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupOpPanelLayout.createSequentialGroup()
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(groupOpPanelLayout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(groupOp_atribLabel)
+                            .addComponent(groupOp_tableLabel)
+                            .addComponent(groupOp_operLabel)
+                            .addComponent(groupOp_resulLabel)))
+                    .addGroup(groupOpPanelLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(groupOp_returnButton)))
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(groupOpPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                        .addComponent(groupOp_continueButton)
+                        .addGap(140, 140, 140))
+                    .addGroup(groupOpPanelLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(groupOp_tableText, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                            .addComponent(groupOp_atribText)
+                            .addComponent(groupOp_resultText)
+                            .addComponent(groupOp_operText))
+                        .addContainerGap())))
+        );
+        groupOpPanelLayout.setVerticalGroup(
+            groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(groupOpPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(groupOp_nameLabel)
+                .addGap(80, 80, 80)
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(groupOp_tableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(groupOp_tableText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(groupOp_atribLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(groupOp_atribText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(groupOp_operLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(groupOp_operText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(groupOp_resultText)
+                    .addComponent(groupOp_resulLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(groupOpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(groupOp_returnButton)
+                    .addComponent(groupOp_continueButton))
+                .addGap(70, 70, 70))
+        );
+
+        getContentPane().add(groupOpPanel, "groupCard");
+
+        result_titleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        result_titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        result_titleLabel.setText("Resultado");
+
+        result_algLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        result_algLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        result_algLabel.setText("Instruccion de algebra relacional");
+
+        result_sqlLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        result_sqlLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        result_sqlLabel.setText("Instruccion de SQL");
+
+        result_tableLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        result_tableLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        result_tableLabel.setText("Tabla resultante");
+
+        result_algText.setEditable(false);
+
+        result_sqlText.setEditable(false);
+
+        result_Table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        result_ScrollPane.setViewportView(result_Table);
+
+        result_returnButton.setText("Regresar");
+        result_returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                result_returnButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout resultPanelLayout = new javax.swing.GroupLayout(resultPanel);
+        resultPanel.setLayout(resultPanelLayout);
+        resultPanelLayout.setHorizontalGroup(
+            resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(result_titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(result_algLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(result_sqlLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(result_tableLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(resultPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(result_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
+                    .addComponent(result_algText)
+                    .addComponent(result_sqlText, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+            .addGroup(resultPanelLayout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(result_returnButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        resultPanelLayout.setVerticalGroup(
+            resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(result_titleLabel)
+                .addGap(50, 50, 50)
+                .addComponent(result_algLabel)
+                .addGap(18, 18, 18)
+                .addComponent(result_algText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(result_sqlLabel)
+                .addGap(18, 18, 18)
+                .addComponent(result_sqlText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(result_tableLabel)
+                .addGap(18, 18, 18)
+                .addComponent(result_ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(result_returnButton)
+                .addContainerGap())
+        );
+
+        getContentPane().add(resultPanel, "resultCard");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void about_homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_homeButtonActionPerformed
-       c.show(this.getContentPane(), "loginCard");
-    }//GEN-LAST:event_about_homeButtonActionPerformed
+    private void about_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_returnButtonActionPerformed
+        c.show(this.getContentPane(), "loginCard");
+    }//GEN-LAST:event_about_returnButtonActionPerformed
 
     private void login_aboutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_aboutButtonActionPerformed
         c.show(this.getContentPane(), "aboutCard");
@@ -254,6 +804,493 @@ public class InterpreteGUI extends javax.swing.JFrame {
     private void login_exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_exitButtonActionPerformed
         dispose();
     }//GEN-LAST:event_login_exitButtonActionPerformed
+
+    private void login_connectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_connectButtonActionPerformed
+        try {
+            String serv = login_serverText.getText();
+            String user = login_userText.getText();
+            String pass = login_passText.getText();
+            String dbName = login_dbText.getText();
+            if (serv.equals("") || user.equals("") || pass.equals("") || dbName.equals("")) {
+                JOptionPane.showMessageDialog(this, "Error: Por favor introduzca datos");
+            } else {
+                conectarBD(serv, user, pass, dbName);
+                c.show(this.getContentPane(), "homeCard");
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Sql Exception :" + sqle.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: No se pudo conectar a la base de datos");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class Not Found Exception :" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: No se pudo encontrar el driver JDBC");
+        }
+    }//GEN-LAST:event_login_connectButtonActionPerformed
+
+    private void oneTabOp_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneTabOp_returnButtonActionPerformed
+        oneTabOp_tableText.setText("");
+        oneTabOp_resultText.setText("");
+        oneTabOp_paramText.setText("");
+        c.show(this.getContentPane(), "homeCard");
+    }//GEN-LAST:event_oneTabOp_returnButtonActionPerformed
+
+    private void twoTabOp_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoTabOp_returnButtonActionPerformed
+        twoTabOp_tableText.setText("");
+        oneTabOp_resultText.setText("");
+        twoTabOp_table2Text.setText("");
+        c.show(this.getContentPane(), "homeCard");
+    }//GEN-LAST:event_twoTabOp_returnButtonActionPerformed
+
+    private void groupOp_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupOp_returnButtonActionPerformed
+        groupOp_tableText.setText("");
+        groupOp_atribText.setText("");
+        groupOp_resultText.setText("");
+        groupOp_operText.setText("");
+        c.show(this.getContentPane(), "homeCard");
+    }//GEN-LAST:event_groupOp_returnButtonActionPerformed
+
+    private void joinOp_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinOp_returnButtonActionPerformed
+        joinOp_tableText.setText("");
+        joinOp_table2Text.setText("");
+        joinOp_predText.setText("");
+        joinOp_resultText.setText("");
+        c.show(this.getContentPane(), "homeCard");
+    }//GEN-LAST:event_joinOp_returnButtonActionPerformed
+
+    private void home_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_returnButtonActionPerformed
+        try {
+            con.close();
+            login_serverText.setText("");
+            login_userText.setText("");
+            login_passText.setText("");
+            login_dbText.setText("");
+            c.show(this.getContentPane(), "loginCard");
+        } catch (SQLException ex) {
+            System.out.println("Sql Exception :" + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: No se pudo desconectar correctamente");
+        }
+    }//GEN-LAST:event_home_returnButtonActionPerformed
+
+    private void home_continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_continueButtonActionPerformed
+        String oper = (String) home_optionComboBox.getSelectedItem();
+        ArrayList<String> oneTab = new ArrayList<>();
+        oneTab.add("Seleccion");
+        oneTab.add("Proyeccion generalizada");
+        oneTab.add("Renombrar atributos");
+        oneTab.add("Agregacion");
+        if (oper.equals("Join")) {
+            c.show(this.getContentPane(), "joinCard");
+        } else if (oper.equals("Agrupacion")) {
+            c.show(this.getContentPane(), "groupCard");
+        } else if (oneTab.contains(oper)) {
+            oneTabOp_nameLabel.setText(oper);
+            c.show(this.getContentPane(), "1TabCard");
+        } else {
+            twoTabOp_nameLabel.setText(oper);
+            c.show(this.getContentPane(), "2TabCard");
+        }
+    }//GEN-LAST:event_home_continueButtonActionPerformed
+
+    private void result_returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_result_returnButtonActionPerformed
+        result_algText.setText("");
+        result_sqlText.setText("");
+        result_Table.setModel(new DefaultTableModel());
+        c.show(this.getContentPane(), "homeCard");
+    }//GEN-LAST:event_result_returnButtonActionPerformed
+
+    private void oneTabOp_continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneTabOp_continueButtonActionPerformed
+        String query,
+                symbol,
+                table = oneTabOp_tableText.getText(),
+                param = oneTabOp_paramText.getText(),
+                res = oneTabOp_resultText.getText(),
+                colNames[];
+        int colCount;
+        try {
+            //Checks if table exists and gets it's metadata
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + table);
+            ResultSetMetaData md = rs.getMetaData();
+            colCount = md.getColumnCount();
+            colNames = new String[colCount];
+            for (int i = 0; i < colCount; i++) {
+                colNames[i] = md.getColumnLabel(i + 1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Sql Exception (No existe la tabla) :" + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: NO EXISTE LA TABLA " + table);
+            return;
+        }
+
+        //Creates the query to execute
+        switch ((String) home_optionComboBox.getSelectedItem()) {
+            case ("Seleccion"): {
+                query = "SELECT * FROM " + table + " WHERE " + param;
+                symbol = "σ";
+                break;
+            }
+            case ("Proyeccion generalizada"): {
+                query = "SELECT " + param + " FROM " + table;
+                symbol = "∏";
+                break;
+            }
+            case ("Renombrar atributos"): {
+                String atriNames[] = param.split(","), renNames = "";
+                if (atriNames.length != colCount) {
+                    JOptionPane.showMessageDialog(this, "Error: NO HAY CORRESPONDENCIA EN LA CANTIDAD DE ATRIBUTOS. LA TABLA " + table + " TIENE " + colCount + " ATRIBUTOS Y SE ESTAN DANDO " + atriNames.length + " ATRIBUTOS");
+                    return;
+                }
+                //We create renNames
+                for (String s : atriNames) {
+                    renNames += s + ",";
+                }
+                query = "SELECT ";
+                //We add the parameters to the query
+                for (int i = 0; i < colCount; i++) {
+                    query += colNames[i] + " as " + atriNames[i];
+                    if (i != colCount - 1) {
+                        query += ",";
+                    }
+                }
+                query += " FROM " + table;
+                param = renNames;
+                symbol = "ρ";
+                break;
+            }
+            case ("Agregacion"): {
+                query = "SELECT " + param + " FROM " + table;
+                symbol = "Ģ";
+                break;
+            }
+            default: {
+                symbol = "";
+                query = "";
+            }
+
+        }
+        result_algText.setText(symbol + " " + param + " (" + table + ")");
+        result_sqlText.setText(query);
+        //Executes the query
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData md = rs.getMetaData();
+            //Gets the amount of columns and its' names.
+            colCount = md.getColumnCount();
+            colNames = new String[colCount];
+            for (int i = 0; i < colCount; i++) {
+                colNames[i] = md.getColumnLabel(i + 1);
+            }
+            //Gets the resulting data and stores it on and ArrayList
+            ArrayList<ArrayList<String>> data = new ArrayList<>();
+            ArrayList<String> row = new ArrayList<>();
+            while (rs.next()) {
+                row = new ArrayList<>();
+                for (int j = 1; j <= colCount; j++) {
+                    System.out.print(rs.getString(j) + " ");
+                    row.add(rs.getString(j));
+                }
+                System.out.println();
+                data.add(row);
+            }
+            rs.close();
+            //Adds the data to the result table
+            result_Table.setModel(new SQLTableModel(data,colNames));
+        } catch (SQLException ex) {
+            System.out.println("Sql Exception :" + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: Fallo en la operacion");
+            return;
+        }
+        oneTabOp_tableText.setText("");
+        oneTabOp_paramText.setText("");
+        oneTabOp_resultText.setText("");
+        c.show(this.getContentPane(), "resultCard");
+    }//GEN-LAST:event_oneTabOp_continueButtonActionPerformed
+
+    private void groupOp_continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupOp_continueButtonActionPerformed
+        String atrib = groupOp_atribText.getText(),
+                oper = groupOp_operText.getText(),
+                table = groupOp_tableText.getText(),
+                res = groupOp_resultText.getText(),
+                query = "SELECT " + oper + " FROM " + table + " GROUP BY " + atrib;
+        result_algText.setText(atrib + " Ģ " + oper + " (" + table + ")");
+        result_sqlText.setText(query);
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData md = rs.getMetaData();
+            //Gets the amount of columns and its' names.
+            int colCount = md.getColumnCount();
+            String colNames[] = new String[colCount];
+            for (int i = 0; i < colCount; i++) {
+                colNames[i] = md.getColumnLabel(i + 1);
+            }
+            //Gets the resulting data and stores it on and ArrayList
+            ArrayList<ArrayList<String>> data = new ArrayList<>();
+            ArrayList<String> row = new ArrayList<>();
+            while (rs.next()) {
+                row = new ArrayList<>();
+                for (int j = 1; j <= colCount; j++) {
+                    System.out.print(rs.getString(j) + " ");
+                    row.add(rs.getString(j));
+                }
+                System.out.println();
+                data.add(row);
+            }
+            rs.close();
+            //Adds the data to the result table
+            result_Table.setModel(new SQLTableModel(data,colNames));
+        } catch (SQLException ex) {
+            System.out.println("Sql Exception :" + ex.getMessage());
+            if (ex.getMessage().equals("Invalid object name '" + table + "'.")) {
+                JOptionPane.showMessageDialog(this, "Error: NO EXISTE LA TABLA " + table);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: Fallo en la operacion");
+            }
+            return;
+        }
+        groupOp_tableText.setText("");
+        groupOp_atribText.setText("");
+        groupOp_operText.setText("");
+        groupOp_resultText.setText("");
+        c.show(this.getContentPane(), "resultCard");
+    }//GEN-LAST:event_groupOp_continueButtonActionPerformed
+
+    private void joinOp_continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinOp_continueButtonActionPerformed
+        String table = joinOp_tableText.getText(),
+                table2 = joinOp_table2Text.getText(),
+                pred = joinOp_predText.getText(),
+                res = joinOp_resultText.getText(),
+                query = "SELECT * FROM " + table + " JOIN " + table2 + " ON " + pred;
+        result_algText.setText(table + " ⋈ " + pred + " " + table2);
+        result_sqlText.setText(query);
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData md = rs.getMetaData();
+            //Gets the amount of columns and its' names.
+            int colCount = md.getColumnCount();
+            String colNames[] = new String[colCount];
+            for (int i = 0; i < colCount; i++) {
+                colNames[i] = md.getColumnLabel(i + 1);
+            }
+            //Gets the resulting data and stores it on and ArrayList
+            ArrayList<ArrayList<String>> data = new ArrayList<>();
+            ArrayList<String> row = new ArrayList<>();
+            while (rs.next()) {
+                row = new ArrayList<>();
+                for (int j = 1; j <= colCount; j++) {
+                    System.out.print(rs.getString(j) + " ");
+                    row.add(rs.getString(j));
+                }
+                System.out.println();
+                data.add(row);
+            }
+            rs.close();
+            //Adds the data to the result table
+            result_Table.setModel(new SQLTableModel(data,colNames));
+        } catch (SQLException ex) {
+            System.out.println("Sql Exception :" + ex.getMessage());
+            if (ex.getMessage().equals("Invalid object name '" + table + "'.")) {
+                JOptionPane.showMessageDialog(this, "Error: NO EXISTE LA TABLA " + table);
+            } else if (ex.getMessage().equals("Invalid object name '" + table2 + "'.")) {
+                JOptionPane.showMessageDialog(this, "Error: NO EXISTE LA TABLA " + table2);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: Fallo en la operacion");
+            }
+            return;
+        }
+        joinOp_tableText.setText("");
+        joinOp_table2Text.setText("");
+        joinOp_predText.setText("");
+        joinOp_resultText.setText("");
+        c.show(this.getContentPane(), "resultCard");
+    }//GEN-LAST:event_joinOp_continueButtonActionPerformed
+
+    private void twoTabOp_continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoTabOp_continueButtonActionPerformed
+        String query,
+                symbol,
+                table = twoTabOp_tableText.getText(),
+                table2 = twoTabOp_table2Text.getText(),
+                res = twoTabOp_resultText.getText(),
+                colNames1[], colNames2[], colType1[], colType2[];
+        ResultSetMetaData md1, md2;
+        int colCount1, colCount2;
+
+        //Checks the existence of both tables and gets their metadata
+        try {
+            //Table1
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + table);
+            md1 = rs.getMetaData();
+            colCount1 = md1.getColumnCount();
+            //Gets the columns' type and name
+            colNames1 = new String[colCount1];
+            colType1 = new String[colCount1];
+            for (int i = 0; i < colCount1; i++) {
+                colNames1[i] = md1.getColumnLabel(i + 1);
+                colType1[i] = md1.getColumnTypeName(i + 1);
+            }
+            //Table2
+            ResultSet rs2 = stmt.executeQuery("SELECT * FROM " + table2);
+            md2 = rs2.getMetaData();
+            colCount2 = md2.getColumnCount();
+            //Gets the columns' type and name
+            colNames2 = new String[colCount2];
+            colType2 = new String[colCount2];
+            for (int j = 0; j < colCount2; j++) {
+                colNames2[j] = md2.getColumnLabel(j + 1);
+                colType2[j] = md2.getColumnTypeName(j + 1);
+            }
+            //Creates the query to execute
+            switch ((String) home_optionComboBox.getSelectedItem()) {
+                case ("Union"): {
+                    //Validations
+                    if (colCount1 != colCount2) {
+                        JOptionPane.showMessageDialog(this, "Error: TABLAS CON DIFERENTE ARIDAD. LA TABLA 1 TIENE ARIDAD " + colCount1 + " Y LA TABLA 2 TIENE ARIDAD " + colCount2);
+                        return;
+                    } else {
+                        for (int a = 0; a < colCount1; a++) {
+                            if (!colType1[a].equals(colType2[a])) {
+                                JOptionPane.showMessageDialog(this, "Error: DOMINIOS DIFERENTES. EL ATRIBUTO " + colNames1[a] + " TIENE DOMINIO " + colType1[a] + " Y EL ATRIBUTO " + colNames2[a] + " TIENE DOMINIO " + colType2[a]);
+                                return;
+                            }
+                        }
+                    }
+                    //Parameters
+                    query = "SELECT * FROM " + table + " UNION SELECT * FROM " + table2;
+                    symbol = "U";
+                    break;
+                }
+                case ("Diferencia de conjuntos"): {
+                    //Validations
+                   if (colCount1 != colCount2) {
+                        JOptionPane.showMessageDialog(this, "Error: TABLAS CON DIFERENTE ARIDAD. LA TABLA 1 TIENE ARIDAD " + colCount1 + " Y LA TABLA 2 TIENE ARIDAD " + colCount2);
+                        return;
+                    } else {
+                        for (int a = 0; a < colCount1; a++) {
+                            if (!colType1[a].equals(colType2[a])) {
+                                JOptionPane.showMessageDialog(this, "Error: DOMINIOS DIFERENTES. EL ATRIBUTO " + colNames1[a] + " TIENE DOMINIO " + colType1[a] + " Y EL ATRIBUTO " + colNames2[a] + " TIENE DOMINIO " + colType2[a]);
+                                return;
+                            }
+                        }
+                    }
+                    //Parameters
+                    query = "SELECT * FROM " + table + " EXCEPT SELECT * FROM " + table2;
+                    symbol = "-";
+                    break;
+                }
+                case ("Prod.Cartesiano"): {
+                    query = "SELECT * FROM " + table + "," + table2;
+                    symbol = "x";
+                    break;
+                }
+                case ("Interseccion"): {
+                    //Validations
+                    if (colCount1 != colCount2) {
+                        JOptionPane.showMessageDialog(this, "Error: TABLAS CON DIFERENTE ARIDAD. LA TABLA 1 TIENE ARIDAD " + colCount1 + " Y LA TABLA 2 TIENE ARIDAD " + colCount2);
+                        return;
+                    } else {
+                        for (int a = 0; a < colCount1; a++) {
+                            if (!colType1[a].equals(colType2[a])) {
+                                JOptionPane.showMessageDialog(this, "Error: DOMINIOS DIFERENTES. EL ATRIBUTO " + colNames1[a] + " TIENE DOMINIO " + colType1[a] + " Y EL ATRIBUTO " + colNames2[a] + " TIENE DOMINIO " + colType2[a]);
+                                return;
+                            }
+                        }
+                    }
+                    //Parameters
+                    query = "SELECT * FROM " + table + " INTERSECT SELECT * FROM " + table2;
+                    symbol = "∩";
+                    break;
+                }
+                case ("Division"): {
+                    //Validations
+                    boolean inTable = false;
+                    for (String s : colNames2) {
+                        for (String p : colNames1) {
+                            if (s.equals(p)) {
+                                inTable = true;
+                                break;
+                            }
+                        }
+                        if (!inTable) {
+                            JOptionPane.showMessageDialog(this, "Error: EL ATRIBUTO " + s + " DE LA TABLA " + table2 + " NO ESTA EN LA TABLA " + table);
+                            return;
+                        }
+                    }
+                    //Parameters
+                    query = "";
+                    symbol = "÷";
+                    return; //Not working as of now
+                    //break;
+                }
+                case ("Natural Join"): {
+                    String commonName = "";
+                    //Validations
+                    boolean commonAtr = false;
+                    for (String s : colNames1) {
+                        for (String p : colNames2) {
+                            if (s.equals(p)) {
+                                commonName = s;
+                                commonAtr = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!commonAtr) {
+                        JOptionPane.showMessageDialog(this, "Error: NO HAY ATRIBUTOS COMUNES");
+                        return;
+                    }
+                    //Parameters
+                    query = "SELECT * FROM " + table + " JOIN " + table2 + " ON " + table + "." + commonName + " = " + table2 + "." + commonName;
+                    symbol = "⋈";
+                    break;
+                }
+                default: {
+                    symbol = "";
+                    query = "";
+                }
+            }
+            result_algText.setText(table + " " + symbol + " " + table2);
+            result_sqlText.setText(query);
+            //Executes the query
+            ResultSet rs3 = stmt.executeQuery(query);
+            ResultSetMetaData md3 = rs3.getMetaData();
+            //Gets the amount of columns and its' names.
+            int colCount = md3.getColumnCount();
+            String colNames[] = new String[colCount];
+            for (int i = 0; i < colCount; i++) {
+                colNames[i] = md3.getColumnLabel(i + 1);
+            }
+            //Gets the resulting data and stores it on and ArrayList
+            ArrayList<ArrayList<String>> data = new ArrayList<>();
+            ArrayList<String> row = new ArrayList<>();
+            while (rs3.next()) {
+                row = new ArrayList<>();
+                for (int j = 1; j <= colCount; j++) {
+                    System.out.print(rs3.getString(j) + " ");
+                    row.add(rs3.getString(j));
+                }
+                System.out.println();
+                data.add(row);
+            }
+            rs3.close();
+            //Adds the data to the result table
+            result_Table.setModel(new SQLTableModel(data,colNames));
+        } catch (SQLException ex) {
+            System.out.println("Sql Exception :" + ex.getMessage());
+            if (ex.getMessage().equals("Invalid object name '" + table + "'.")) {
+                JOptionPane.showMessageDialog(this, "Error: NO EXISTE LA TABLA " + table);
+            } else if (ex.getMessage().equals("Invalid object name '" + table2 + "'.")) {
+                JOptionPane.showMessageDialog(this, "Error: NO EXISTE LA TABLA " + table2);
+            }
+            return;
+        }
+        twoTabOp_tableText.setText("");
+        twoTabOp_table2Text.setText("");
+        twoTabOp_resultText.setText("");
+        c.show(this.getContentPane(), "resultCard");
+    }//GEN-LAST:event_twoTabOp_continueButtonActionPerformed
+
+    public void conectarBD(String serverName, String userName, String userPass, String databaseName) throws SQLException, ClassNotFoundException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  // load the driver
+        con = DriverManager.getConnection("jdbc:sqlserver://" + serverName + ":1433;databaseName=" + databaseName + ";user=" + userName + ";password=" + userPass);
+        stmt = con.createStatement();
+    }
 
     /**
      * @param args the command line arguments
@@ -271,24 +1308,20 @@ public class InterpreteGUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterpreteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterpreteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterpreteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InterpreteGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
+        //</editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 InterpreteGUI a = new InterpreteGUI();
                 a.pack();
                 a.setVisible(true);
-                
+
             }
         });
     }
@@ -297,11 +1330,44 @@ public class InterpreteGUI extends javax.swing.JFrame {
     private javax.swing.JPanel aboutPanel;
     private javax.swing.JLabel about_authorLabel;
     private javax.swing.JLabel about_creationLabel;
-    private javax.swing.JButton about_homeButton;
     private javax.swing.JLabel about_nameLabel;
+    private javax.swing.JButton about_returnButton;
     private javax.swing.JLabel about_titleLabel;
     private javax.swing.JLabel about_verLabel;
+    private javax.swing.JPanel groupOpPanel;
+    private javax.swing.JLabel groupOp_atribLabel;
+    private javax.swing.JTextField groupOp_atribText;
+    private javax.swing.JButton groupOp_continueButton;
+    private javax.swing.JLabel groupOp_nameLabel;
+    private javax.swing.JLabel groupOp_operLabel;
+    private javax.swing.JTextField groupOp_operText;
+    private javax.swing.JLabel groupOp_resulLabel;
+    private javax.swing.JTextField groupOp_resultText;
+    private javax.swing.JButton groupOp_returnButton;
+    private javax.swing.JLabel groupOp_tableLabel;
+    private javax.swing.JTextField groupOp_tableText;
     private javax.swing.JPanel homePanel;
+    private javax.swing.JButton home_continueButton;
+    private javax.swing.JLabel home_mainLabel;
+    private javax.swing.JComboBox<String> home_optionComboBox;
+    private javax.swing.JLabel home_otherLabel;
+    private javax.swing.JButton home_returnButton;
+    private javax.swing.JLabel home_titleLabel;
+    private javax.swing.JButton home_viewCrossButton;
+    private javax.swing.JButton home_viewDBButton;
+    private javax.swing.JButton home_viewTempButton;
+    private javax.swing.JPanel joinOpPanel;
+    private javax.swing.JButton joinOp_continueButton;
+    private javax.swing.JLabel joinOp_nameLabel;
+    private javax.swing.JLabel joinOp_predLabel;
+    private javax.swing.JTextField joinOp_predText;
+    private javax.swing.JLabel joinOp_resulLabel;
+    private javax.swing.JTextField joinOp_resultText;
+    private javax.swing.JButton joinOp_returnButton;
+    private javax.swing.JLabel joinOp_table2Label;
+    private javax.swing.JTextField joinOp_table2Text;
+    private javax.swing.JLabel joinOp_tableLabel;
+    private javax.swing.JTextField joinOp_tableText;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JButton login_aboutButton;
     private javax.swing.JButton login_connectButton;
@@ -317,5 +1383,35 @@ public class InterpreteGUI extends javax.swing.JFrame {
     private javax.swing.JLabel login_titleLabel;
     private javax.swing.JLabel login_userLabel;
     private javax.swing.JTextField login_userText;
+    private javax.swing.JPanel oneTabOpPanel;
+    private javax.swing.JButton oneTabOp_continueButton;
+    private javax.swing.JLabel oneTabOp_nameLabel;
+    private javax.swing.JLabel oneTabOp_paramLabel;
+    private javax.swing.JTextField oneTabOp_paramText;
+    private javax.swing.JLabel oneTabOp_resulLabel;
+    private javax.swing.JTextField oneTabOp_resultText;
+    private javax.swing.JButton oneTabOp_returnButton;
+    private javax.swing.JLabel oneTabOp_tableLabel;
+    private javax.swing.JTextField oneTabOp_tableText;
+    private javax.swing.JPanel resultPanel;
+    private javax.swing.JScrollPane result_ScrollPane;
+    private javax.swing.JTable result_Table;
+    private javax.swing.JLabel result_algLabel;
+    private javax.swing.JTextField result_algText;
+    private javax.swing.JButton result_returnButton;
+    private javax.swing.JLabel result_sqlLabel;
+    private javax.swing.JTextField result_sqlText;
+    private javax.swing.JLabel result_tableLabel;
+    private javax.swing.JLabel result_titleLabel;
+    private javax.swing.JPanel twoTabOpPanel;
+    private javax.swing.JButton twoTabOp_continueButton;
+    private javax.swing.JLabel twoTabOp_nameLabel;
+    private javax.swing.JLabel twoTabOp_resulLabel;
+    private javax.swing.JTextField twoTabOp_resultText;
+    private javax.swing.JButton twoTabOp_returnButton;
+    private javax.swing.JLabel twoTabOp_table2Label;
+    private javax.swing.JTextField twoTabOp_table2Text;
+    private javax.swing.JLabel twoTabOp_tableLabel;
+    private javax.swing.JTextField twoTabOp_tableText;
     // End of variables declaration//GEN-END:variables
 }
